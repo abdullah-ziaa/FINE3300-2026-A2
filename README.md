@@ -52,9 +52,9 @@ Current file. Contains project introduction, description of files, and other rel
 
 ## Sample Output
 
-Enter the amount: 100 \
-Enter the first date (YYYY-MM): 2000-09 \
-Enter the second date (YYYY-MM): 2026-09 \
+Enter the amount: 100
+Enter the first date (YYYY-MM): 2000-09
+Enter the second date (YYYY-MM): 2026-09
 
 Percent Change: 76.90%
 Years between dates: 26.00
