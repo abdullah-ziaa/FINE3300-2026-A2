@@ -63,3 +63,6 @@ CPI on 2000-09: 96.10
 CPI on 2026-09: 170.00
 New Amount: 176.90
 ```
+
+# GitHub Repository Link
+https://github.com/abdullah-ziaa/FINE3300-2026-A2.git
