@@ -18,16 +18,16 @@ class CPI_Calculator:
         # Create a lookup dictionary for CPI values based on year and month
         cpi_lookup = {}
         for i in range(len(self.data)):
-            d = self.data["date"].iloc[i]
-            key = (d.year, d.month)
-            if key not in cpi_lookup:
-                cpi_lookup[key] = self.data["CPI"].iloc[i]
+            loc = self.data["date"].iloc[i]
+            entry = (loc.year, loc.month)
+            if entry not in cpi_lookup:
+                cpi_lookup[entry] = self.data["CPI"].iloc[i]
 
         # Create a list of annual changes in CPI for each year and Loop over the data rows and compare CPI values to the same month in the previous year to calculate the annual percent change
         annual_change = []
         for i in range(len(self.data)):
-            d = self.data["date"].iloc[i]
-            prev = cpi_lookup.get((d.year - 1, d.month))
+            loc = self.data["date"].iloc[i]
+            prev = cpi_lookup.get((loc.year - 1, loc.month))
             if prev is None:
                 annual_change.append(np.nan)
             else:
@@ -38,15 +38,18 @@ class CPI_Calculator:
         self.first_date = self.data["date"].iloc[0]
         self.last_date = self.data["date"].iloc[-1]
 
+    # Calculate the CPI for a given year and month by looking it up in the data
     def get_cpi(self, year, month):
         target_date = pd.Timestamp(year, month, 1)
 
         return self.data[self.data["date"] == target_date]["CPI"].iloc[0]
 
+    # Validate the input date to ensure it is in the correct format and within the range of available data
     def date_validation(self, text):
-
         while True:
+            # Convert the input string to a datetime object and check if it is within the range of available data
             date_str = input(text)
+            # Use a try-except block to handle invalid date formats and out-of-range dates
             try:
                 date = dt.datetime.strptime(date_str, "%Y-%m")
                 if self.first_date <= date <= self.last_date:
@@ -56,7 +59,9 @@ class CPI_Calculator:
             except ValueError:
                 print("Invalid date format. Please enter the date in YYYY-MM format.")
 
+    # Calculate the new amount and percent change based on the CPI values for two given dates
     def get_apc(self, amount, date1, date2):
+        # Get the CPI values for the two dates using the get_cpi method
         cpi1 = self.get_cpi(date1[0], date1[1])
         cpi2 = self.get_cpi(date2[0], date2[1])
 
