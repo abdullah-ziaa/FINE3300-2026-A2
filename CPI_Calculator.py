@@ -34,7 +34,7 @@ class CPI_Calculator:
                 annual_change.append((self.data["CPI"].iloc[i] - prev) / prev * 100)
         self.data["Annual Percent Change"] = annual_change
 
-        # Set first and last dates for validation purposes
+        # Store the first and last dates in the dataset for reference and validation
         self.first_date = self.data["date"].iloc[0]
         self.last_date = self.data["date"].iloc[-1]
 
@@ -43,4 +43,78 @@ class CPI_Calculator:
 
         return self.data[self.data["date"] == target_date]["CPI"].iloc[0]
 
+    def date_validation(self, text):
 
+        while True:
+            date_str = input(text)
+            try:
+                date = dt.datetime.strptime(date_str, "%Y-%m")
+                if self.first_date <= date <= self.last_date:
+                    return (date.year, date.month)
+                else:
+                    print(f"Date must be between {self.first_date.strftime('%Y-%m')} and {self.last_date.strftime('%Y-%m')}. Please try again.")
+            except ValueError:
+                print("Invalid date format. Please enter the date in YYYY-MM format.")
+
+    def get_apc(self, amount, date1, date2):
+        cpi1 = self.get_cpi(date1[0], date1[1])
+        cpi2 = self.get_cpi(date2[0], date2[1])
+
+        # Calculate the ratio of the two CPI values and use it to calculate the new amount and percent change
+        ratio = cpi2 / cpi1
+        new_amount = amount * ratio
+        percent_change = (ratio - 1) * 100
+
+        # Calculate the number of months and years between the two dates
+        months = (date2[0] - date1[0]) * 12 + (date2[1] - date1[1])
+        years = months / 12
+
+        # Calculate the annualized rate of change using the formula for compound annual growth rate (CAGR)
+        if years == 0:
+            annual_rate = 0.0
+        else: 
+            annual_rate = (ratio ** (1 / years) - 1) * 100
+
+        return {
+            "CPI1": cpi1,
+            "CPI2": cpi2,
+            "New Amount": new_amount,
+            "Percent Change": percent_change,
+            "Years": years,
+            "Annual Rate": annual_rate
+        }
+
+    def run(self):
+        # Prompt the user for amount value and validate the input to ensure it is a non-negative number
+        while True:
+            try:
+                amount = float(input("Enter the amount: "))
+                if amount < 0:
+                    print("Amount must be a non-negative number. Please try again.")
+                    continue
+                break
+            except ValueError:
+                print("Invalid input. Please enter a valid number.")
+
+        # Prompt the user for two dates and validate the input to ensure they are in the correct format and within the range of available data
+        date1 = self.date_validation("Enter the first date (YYYY-MM): ")
+        date2 = self.date_validation("Enter the second date (YYYY-MM): ")
+
+        # Convert the input strings to tuples of integers representing year and month
+        date1 = (int(date1[0]), int(date1[1]))
+        date2 = (int(date2[0]), int(date2[1]))
+
+        # Call the get_apc method to calculate the new amount and percent change
+        result = self.get_apc(amount, date1, date2)
+
+        # Print the results in a formatted manner
+        print(f"\nPercent Change: {result['Percent Change']:.2f}%")
+        print(f"Years between dates: {result['Years']:.2f}")
+        print(f"Annual Rate of Change: {result['Annual Rate']:.2f}%")
+        print(f"CPI on {date1[0]}-{date1[1]:02d}: {result['CPI1']:.2f}")
+        print(f"CPI on {date2[0]}-{date2[1]:02d}: {result['CPI2']:.2f}")
+        print(f"New Amount: {result['New Amount']:.2f}")
+
+if __name__ == "__main__":
+    calculator = CPI_Calculator("STATIC_INFLATIONCALC.csv")
+    calculator.run()
