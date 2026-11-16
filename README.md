@@ -52,20 +52,13 @@ Current file. Contains project introduction, description of files, and other rel
 
 ## Sample Output
 
-Enter the amount: 100
-
+Enter the amount: 100 \
 Enter the first date (YYYY-MM): 2000-09
-
 Enter the second date (YYYY-MM): 2026-09
 
 Percent Change: 76.90%
-
 Years between dates: 26.00
-
 Annual Rate of Change: 2.22%
-
 CPI on 2000-09: 96.10
-
 CPI on 2026-09: 170.00
-
 New Amount: 176.90
