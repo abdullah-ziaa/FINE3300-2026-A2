@@ -55,9 +55,9 @@ class CPI_Calculator:
                 if self.first_date <= date <= self.last_date:
                     return (date.year, date.month)
                 else:
-                    print(f"Date must be between {self.first_date.strftime('%Y-%m')} and {self.last_date.strftime('%Y-%m')}. Please try again.")
+                    print(f"Date must be between {self.first_date.strftime('%Y-%m')} and {self.last_date.strftime('%Y-%m')}.")
             except ValueError:
-                print("Invalid date format. Please enter the date in YYYY-MM format.")
+                print("Invalid, enter the date in YYYY-MM format.")
 
     # Calculate the new amount and percent change based on the CPI values for two given dates
     def get_apc(self, amount, date1, date2):
@@ -96,11 +96,11 @@ class CPI_Calculator:
             try:
                 amount = float(input("Enter the amount: "))
                 if amount < 0:
-                    print("Amount must be a non-negative number. Please try again.")
+                    print("Amount must be a positive number, try again.")
                     continue
                 break
             except ValueError:
-                print("Invalid input. Please enter a valid number.")
+                print("Invalid, enter a valid number.")
 
         # Prompt user for two dates and validate inputs to ensure they are in the correct format and range of available data
         date1 = self.date_validation("Enter the first date (YYYY-MM): ")
