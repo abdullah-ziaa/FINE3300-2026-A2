@@ -24,7 +24,7 @@ ax2 = ax.inset_axes([0, 0, 1, 1])
 ax2.patch.set_alpha(0.0)
 line_pct = ax2.plot(df["date"], df["Annual Percent Change"], color="C3", linewidth=0.8, alpha=0.6)
 
-# Set the x-ticks and y-ticks for the secondary y-axis to be empty and position the y-axis label on the right side of the graph
+
 ax2.set_xticks([])
 ax2.yaxis.tick_right()
 ax2.yaxis.set_label_position("right")

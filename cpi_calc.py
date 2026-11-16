@@ -106,10 +106,6 @@ class CPI_Calculator:
         date1 = self.date_validation("Enter the first date (YYYY-MM): ")
         date2 = self.date_validation("Enter the second date (YYYY-MM): ")
 
-        # Convert input strings to tuples of integers representing year and month
-        date1 = (int(date1[0]), int(date1[1]))
-        date2 = (int(date2[0]), int(date2[1]))
-
         # Call get_apc method to calculate the new amount and percent change
         result = self.get_apc(amount, date1, date2)
 
@@ -119,7 +115,7 @@ class CPI_Calculator:
         print(f"Annual Rate of Change: {result['Annual Rate']:.2f}%")
         print(f"CPI on {date1[0]}-{date1[1]:02d}: {result['CPI1']:.2f}")
         print(f"CPI on {date2[0]}-{date2[1]:02d}: {result['CPI2']:.2f}")
-        print(f"New Amount: {result['New Amount']:.2f}")
+        print(f"${amount:,.2f} CAD in {date1[0]}-{date1[1]:02d} is ${result['New Amount']:,.2f} CAD in {date2[0]}-{date2[1]:02d}")
 
 if __name__ == "__main__":
     calculator = CPI_Calculator("STATIC_INFLATIONCALC.csv")
