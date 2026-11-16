@@ -51,7 +51,7 @@ Current file. Contains project introduction, description of files, and other rel
 * Around the 1990s and onward, inflation has stayed relatively stable and low aside from the Covid-19 pandemic.
 
 ## Sample Output
-
+```
 Enter the amount: 100
 Enter the first date (YYYY-MM): 2000-09
 Enter the second date (YYYY-MM): 2026-09
@@ -62,3 +62,4 @@ Annual Rate of Change: 2.22%
 CPI on 2000-09: 96.10
 CPI on 2026-09: 170.00
 New Amount: 176.90
+```
