@@ -74,12 +74,13 @@ class CPI_Calculator:
         months = (date2[0] - date1[0]) * 12 + (date2[1] - date1[1])
         years = months / 12
 
-        # Calculate the annualized rate of change using the formula for compound annual growth rate (CAGR)
+        # Calculate the annual rate of change using the percentage change formula on the Bank of Canada inflation calculator page
         if years == 0:
             annual_rate = 0.0
         else: 
             annual_rate = (ratio ** (1 / years) - 1) * 100
 
+        # Return calculated values in a dictionary for easier access and formatting
         return {
             "CPI1": cpi1,
             "CPI2": cpi2,
@@ -90,7 +91,7 @@ class CPI_Calculator:
         }
 
     def run(self):
-        # Prompt the user for amount value and validate the input to ensure it is a non-negative number
+        # Prompt user for amount value and validate the input to ensure it is a non-negative number
         while True:
             try:
                 amount = float(input("Enter the amount: "))
@@ -101,18 +102,18 @@ class CPI_Calculator:
             except ValueError:
                 print("Invalid input. Please enter a valid number.")
 
-        # Prompt the user for two dates and validate the input to ensure they are in the correct format and within the range of available data
+        # Prompt user for two dates and validate inputs to ensure they are in the correct format and range of available data
         date1 = self.date_validation("Enter the first date (YYYY-MM): ")
         date2 = self.date_validation("Enter the second date (YYYY-MM): ")
 
-        # Convert the input strings to tuples of integers representing year and month
+        # Convert input strings to tuples of integers representing year and month
         date1 = (int(date1[0]), int(date1[1]))
         date2 = (int(date2[0]), int(date2[1]))
 
-        # Call the get_apc method to calculate the new amount and percent change
+        # Call get_apc method to calculate the new amount and percent change
         result = self.get_apc(amount, date1, date2)
 
-        # Print the results in a formatted manner
+        # Print the results as shown on the Bank of Canada inflation calculate page
         print(f"\nPercent Change: {result['Percent Change']:.2f}%")
         print(f"Years between dates: {result['Years']:.2f}")
         print(f"Annual Rate of Change: {result['Annual Rate']:.2f}%")
